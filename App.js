@@ -1,112 +1,84 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// Screen Imports
+import BlankScreen from './src/screens/BlankScreen';
+import AboutScreen from './src/screens/AboutScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import NewsDetailScreen from './src/screens/NewsDetailScreen';
+import NewsListScreen from './src/screens/NewsListScreen';
+import SignupScreen from './src/screens/SignupScreen';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const AppStack = createStackNavigator();
+const NewsStack = createStackNavigator();
+const HomeTab = createBottomTabNavigator();
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+function NewsStackNavigation() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <NewsStack.Navigator
+      initialRouteName="NewsList"
+      screenOptions={{headerShown: false}}>
+      <NewsStack.Screen name="NewsList" component={NewsListScreen} />
+      <NewsStack.Screen name="NewsDetail" component={NewsDetailScreen} />
+    </NewsStack.Navigator>
   );
-};
+}
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function MainAppTabNavigation() {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <HomeTab.Navigator
+      screenOptions={{headerShown: false, keyboardHidesTabBar: true}}
+      backBehavior="none">
+      <HomeTab.Screen
+        name="News"
+        component={NewsStackNavigation}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <Icon name="newspaper-variant" size={28} color="#3D3EC0" />
+            ) : (
+              <Icon name="newspaper-variant" size={28} color="#C2D4FF" />
+            ),
+        }}
+      />
+      <HomeTab.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <Icon name="account-box" size={28} color="#3D3EC0" />
+            ) : (
+              <Icon name="account-box" size={28} color="#C2D4FF" />
+            ),
+        }}
+      />
+    </HomeTab.Navigator>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+function App() {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <AppStack.Navigator
+          initialRouteName="Signup"
+          screenOptions={{headerShown: false}}>
+          <AppStack.Screen name="Blank" component={BlankScreen} />
+          <AppStack.Screen name="Login" component={LoginScreen} />
+          <AppStack.Screen name="Signup" component={SignupScreen} />
+          <AppStack.Screen name="MainApp" component={MainAppTabNavigation} />
+        </AppStack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
 
 export default App;
