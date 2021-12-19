@@ -408,11 +408,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
   },
 
-  NewsDetailFeaturedStoryReactionContainer: {
-    flexDirection: 'row',
-    marginTop: 8,
-  },
-
   NewsDetailFeaturedStoryWebpageButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -423,24 +418,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
-  NewsDetailFeaturedStoryReaction: {
+  NewsDetailCommentHeadingContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  NewsDetailFeaturedStoryInfoText: {
-    color: '#B3CAFF',
-    fontSize: 12,
-    fontFamily: 'Manrope3-Semibold',
-    marginLeft: 4,
-    marginRight: 18,
-    letterSpacing: 0.25,
   },
 
   NewsDetailCommentsContainer: {
     paddingHorizontal: 24,
     paddingTop: 24,
     paddingBottom: 100,
+  },
+
+  NewsDetailCommentPagination: {
+    fontSize: 12,
+    color: '#8c909c',
+  },
+
+  NewsDetailCommentPaginationButtonContainer: {
+    flexDirection: 'row',
+    width: 80,
+    justifyContent: 'space-between',
   },
 
   NewsDetailCommentSectionHeading: {
@@ -470,7 +468,6 @@ const styles = StyleSheet.create({
 
   NewsDetailMoreStoriesLoadingContainer: {
     paddingHorizontal: 20,
-    // paddingBottom: 140,
     marginVertical: 50,
     alignItems: 'center',
     justifyContent: 'center',

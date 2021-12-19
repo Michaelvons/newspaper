@@ -1,14 +1,12 @@
 import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import SplashScreen from 'react-native-splash-screen';
 
 // Screen Imports
-import BlankScreen from './src/screens/BlankScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import NewsDetailScreen from './src/screens/NewsDetailScreen';
@@ -20,11 +18,6 @@ const NewsStack = createStackNavigator();
 const HomeTab = createBottomTabNavigator();
 
 function NewsStackNavigation() {
-  //Hide Splash screen on app load.
-  // useEffect(() => {
-  //   SplashScreen.hide();
-  // }, []);
-
   return (
     <NewsStack.Navigator
       initialRouteName="NewsList"
@@ -77,7 +70,6 @@ function App() {
         <AppStack.Navigator
           initialRouteName="Signup"
           screenOptions={{headerShown: false}}>
-          <AppStack.Screen name="Blank" component={BlankScreen} />
           <AppStack.Screen name="Login" component={LoginScreen} />
           <AppStack.Screen name="Signup" component={SignupScreen} />
           <AppStack.Screen name="MainApp" component={MainAppTabNavigation} />

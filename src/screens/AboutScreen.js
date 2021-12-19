@@ -3,7 +3,7 @@ import {Text, View, Image, StatusBar} from 'react-native';
 import {styles} from '../styles/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const AboutScreen = ({navigation}) => {
+const AboutScreen = () => {
   return (
     <View>
       <StatusBar

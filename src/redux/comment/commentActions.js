@@ -11,10 +11,10 @@ export const commentLazyRequest = () => {
   };
 };
 
-export const commentLazySuccess = (newComments, previousComments) => {
+export const commentLazySuccess = array => {
   return {
     type: COMMENT_LAZY_SUCCESS,
-    payload: {new_comments: newComments, previous_comments: previousComments},
+    payload: array,
   };
 };
 
@@ -25,7 +25,7 @@ export const commentLazyFailure = err => {
   };
 };
 
-export const commentLazy = (endpoints, comments) => dispatch =>
+export const commentLazy = endpoints => dispatch =>
   new Promise(function (resolve, reject) {
     dispatch(commentLazyRequest());
 
@@ -34,7 +34,7 @@ export const commentLazy = (endpoints, comments) => dispatch =>
       .then(res => {
         let response = res.map((item, index) => item.data);
         console.log(response);
-        dispatch(commentLazySuccess(response, comments));
+        dispatch(commentLazySuccess(response));
         resolve(response);
       })
       .catch(err => {

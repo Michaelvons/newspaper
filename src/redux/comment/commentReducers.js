@@ -10,16 +10,6 @@ const initialState = {
   error: '',
 };
 
-const setLazilyLoadedComments = payload => {
-  //   payload.new_comments.map((item, index) => {
-  //     payload.previous_comments.push(item);
-  //   });
-
-  return payload.new_comments;
-
-  //   return payload.previous_comments;
-};
-
 const commentReducer = (state = initialState, action) => {
   switch (action.type) {
     case COMMENT_LAZY_REQUEST:
@@ -33,7 +23,7 @@ const commentReducer = (state = initialState, action) => {
       return {
         ...state,
         loading_comments: false,
-        comments: setLazilyLoadedComments(action.payload),
+        comments: action.payload,
       };
 
     case COMMENT_LAZY_FAILURE:

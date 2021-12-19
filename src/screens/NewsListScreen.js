@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, Image, StatusBar, FlatList} from 'react-native';
+import {Text, View, Image, StatusBar} from 'react-native';
 import {styles} from '../styles/styles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {storyFetch, storyLazy} from '../redux';
 import {useDispatch, useSelector} from 'react-redux';
-import moment from 'moment';
-import {sentenceCase} from '../utils/helper';
-import StoryComponent from '../components/StoryComponent';
+import {sentenceCase, randomKey} from '../utils/helper';
 import * as Progress from 'react-native-progress';
 import {useIsFocused} from '@react-navigation/native';
+import HeroStoryInfoComponent from '../components/HeroStoryInfoComponent';
+import HeroStoryReactionComponent from '../components/HeroStoryReactionComponent';
+import OtherStoryInfoComponent from '../components/OtherStoryInfoComponent';
+import OtherStoryReactionComponent from '../components/OtherStoryReactionComponent';
 
 const NewsListScreen = ({navigation}) => {
   //////
@@ -55,18 +56,10 @@ const NewsListScreen = ({navigation}) => {
   const getStoriesLazily = (storyIDs, previousStories = []) => {
     let paginatedRequest = storyIDs.slice(storyIndexStart, storyIndexEnd);
 
-    console.log(
-      'storyIndexStart, storyIndexEnd->',
-      storyIndexStart,
-      storyIndexEnd,
-    );
-
     let endpoints = paginatedRequest.map(
       (id, index) =>
         `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`,
     );
-
-    // console.log('endpoints->', endpoints);
 
     dispatch(storyLazy(endpoints, previousStories))
       .then(res => {
@@ -88,10 +81,6 @@ const NewsListScreen = ({navigation}) => {
     if (shouldLoadContent === true && isLoadingStories === false) {
       getStoriesLazily(allStoryIDs, allStories);
     }
-  };
-
-  const randomKeys = () => {
-    return Math.floor(Math.random() * 10000);
   };
 
   const shouldShowMorePreloader = () => {
@@ -125,7 +114,6 @@ const NewsListScreen = ({navigation}) => {
             loadMoreContent(nativeEvent);
           }}>
           {/* Featured Story */}
-
           {isLoadingStoryByIDs && (
             <View style={styles.NewsListFeaturedLoadingContainer}>
               <Progress.CircleSnail
@@ -145,23 +133,8 @@ const NewsListScreen = ({navigation}) => {
               {allStories.slice(0, 1).map((item, index) => (
                 <View
                   style={styles.NewsListFeaturedStoryContainer}
-                  key={randomKeys()}>
-                  <View style={styles.NewsListFeaturedStoryInfoContainer}>
-                    {/* <Text style={styles.NewsListFeaturedStoryTag}>
-                      FEATURED
-                    </Text> */}
-                    {item.is_trending && (
-                      <Text style={styles.NewsListStoryTag}>TRENDING</Text>
-                    )}
-                    <Text style={styles.NewsListFeaturedStoryInfo}>
-                      {moment.unix(item.time).format('LL').toUpperCase()}
-                    </Text>
-                    <Icon name="circle-small" size={24} color="#B3CAFF" />
-                    <Text style={styles.NewsListFeaturedStoryInfo}>
-                      {item.by.toUpperCase()}
-                    </Text>
-                  </View>
-                  {/* Check if is clickable is true or false */}
+                  key={randomKey()}>
+                  <HeroStoryInfoComponent data={item} />
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate('NewsDetail', {storyData: item})
@@ -170,31 +143,7 @@ const NewsListScreen = ({navigation}) => {
                       {sentenceCase(item.title)}
                     </Text>
                   </TouchableOpacity>
-                  <View style={styles.NewsListFeaturedStoryReactionContainer}>
-                    <View style={styles.NewsListFeaturedStoryReaction}>
-                      <Icon name="star" size={16} color="#B3CAFF" />
-                      <Text style={styles.NewsListFeaturedStoryInfoText}>
-                        {item.score} Votes
-                      </Text>
-                    </View>
-                    <View style={styles.NewsListFeaturedStoryReaction}>
-                      <Icon name="comment" size={13} color="#B3CAFF" />
-                      <Text style={styles.NewsListFeaturedStoryInfoText}>
-                        {item.kids !== undefined ? item.kids.length : 0}{' '}
-                        Comments
-                      </Text>
-                    </View>
-                    {/* <View style={styles.NewsListFeaturedStoryWebpageButton}>
-                      <Icon
-                        name="arrow-top-right-thick"
-                        size={16}
-                        color="#B3CAFF"
-                      />
-                      <Text style={styles.NewsListFeaturedStoryInfoText}>
-                        Open Webpage
-                      </Text>
-                    </View> */}
-                  </View>
+                  <HeroStoryReactionComponent data={item} />
                 </View>
               ))}
             </View>
@@ -203,19 +152,8 @@ const NewsListScreen = ({navigation}) => {
           {/* Other News */}
           <View style={styles.NewsListStoriesContainer}>
             {allStories.slice(1, storyIndexEnd).map((item, index) => (
-              <View style={styles.NewsListStoryContainer} key={randomKeys()}>
-                <View style={styles.NewsListStoryInfoContainer}>
-                  {item.is_trending && (
-                    <Text style={styles.NewsListStoryTag}>TRENDING</Text>
-                  )}
-                  <Text style={styles.NewsListStoryInfo}>
-                    {moment.unix(item.time).format('LL').toUpperCase()}
-                  </Text>
-                  <Icon name="circle-small" size={24} color="#8c909c" />
-                  <Text style={styles.NewsListStoryInfo}>
-                    {item.by.toUpperCase()}
-                  </Text>
-                </View>
+              <View style={styles.NewsListStoryContainer} key={randomKey()}>
+                <OtherStoryInfoComponent data={item} />
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('NewsDetail', {storyData: item})
@@ -224,28 +162,7 @@ const NewsListScreen = ({navigation}) => {
                     {sentenceCase(item.title)}
                   </Text>
                 </TouchableOpacity>
-
-                <View style={styles.NewsListReactionContainer}>
-                  <View style={styles.NewsListReactionVotes}>
-                    <Icon name="star" size={16} color="#8c909c" />
-                    <Text style={styles.NewsListStoryInfoText}>
-                      {item.score}
-                    </Text>
-                  </View>
-                  <View style={styles.NewsListReactionVotes}>
-                    <Icon name="comment" size={13} color="#8c909c" />
-                    <Text style={styles.NewsListStoryInfoText}>
-                      {item.kids !== undefined ? item.kids.length : 0}
-                    </Text>
-                  </View>
-                  {/* <View style={styles.NewsListStoryWebpageButton}>
-                    <Icon
-                      name="arrow-top-right-thick"
-                      size={16}
-                      color="#1DA1F2"
-                    />
-                  </View> */}
-                </View>
+                <OtherStoryReactionComponent data={item} />
               </View>
             ))}
           </View>
