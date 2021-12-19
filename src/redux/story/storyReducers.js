@@ -16,13 +16,10 @@ const initialState = {
 };
 
 const setLazilyLoadedStories = payload => {
-  // sort by value
-
+  // sort by trending
   let sortByTrending = payload.new_stories.sort(function (a, b) {
     return b.score - a.score;
   });
-
-  //   console.log('sortByTrending->', sortByTrending);
 
   payload.new_stories.map((item, index) => {
     if (item.id === sortByTrending[0].id) {
