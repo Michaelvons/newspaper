@@ -1,11 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StatusBar, ImageBackground, Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from '../styles/styles';
 import {TextInput, Button} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {toastOptions} from '../utils/helper';
+import Toast from 'react-native-root-toast';
+import {isValidEmail, isValidPassword} from '../utils/validator';
+import {errorMessage} from '../utils/helper';
 
 const SignupScreen = ({navigation}) => {
+  /////
+  // States
+  /////
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  /////
+  // Functions
+  /////
+
+  const validateInputs = () => {
+    isValidEmail(email) === false
+      ? Toast.show(errorMessage.EMAIL_INVALID, toastOptions)
+      : null;
+
+    isValidPassword(password) === false
+      ? Toast.show(errorMessage.PASSWORD_TOO_SHORT, toastOptions)
+      : null;
+
+    if (isValidEmail(email) === true && isValidPassword(password) === true) {
+      storeAuthCredentials();
+    }
+  };
+
+  const storeAuthCredentials = async () => {
+    Toast.show('Account Created. Kindly Login', toastOptions);
+
+    try {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('password', password);
+    } catch (e) {
+      // saving error
+      console.log('e->', e);
+    }
+  };
+
   return (
     <View>
       <StatusBar
@@ -41,6 +82,7 @@ const SignupScreen = ({navigation}) => {
                   activeOutlineColor="rgba(179,202,255,0.3)"
                   activeUnderlineColor="#1DA1F2"
                   theme={styles.SignupTextInputTheme}
+                  onChangeText={text => setEmail(text)}
                 />
                 <TextInput
                   label="Password"
@@ -50,9 +92,11 @@ const SignupScreen = ({navigation}) => {
                   activeOutlineColor="rgba(179,202,255,0.3)"
                   activeUnderlineColor="#1DA1F2"
                   theme={styles.SignupTextInputTheme}
+                  onChangeText={text => setPassword(text)}
                 />
                 <Button
                   mode="contained"
+                  onPress={() => validateInputs()}
                   color="#1DA1F2"
                   contentStyle={{height: 60}}
                   labelStyle={styles.SignupTextInputLabel}

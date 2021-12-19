@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
 
   NewsListStoriesContainer: {
     paddingHorizontal: 20,
+    paddingBottom: 56,
   },
 
   NewsListStoryContainer: {
@@ -111,6 +112,94 @@ const styles = StyleSheet.create({
     maxWidth: 134,
     borderRadius: 100,
     borderWidth: 1,
+  },
+
+  NewsListAppBarContainer: {
+    paddingTop: 56,
+    paddingBottom: 30,
+    backgroundColor: '#3D3EC0',
+    paddingHorizontal: 20,
+  },
+
+  NewsListFeaturedStoryContainer: {
+    backgroundColor: '#3D3EC0',
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    minHeight: 150,
+  },
+
+  NewsListFeaturedLoadingContainer: {
+    backgroundColor: '#3D3EC0',
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    minHeight: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  NewsListMoreStoriesLoadingContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 140,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  NewsListFeaturedStoryInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  NewsListFeaturedStoryTag: {
+    backgroundColor: '#1DA1F2',
+    paddingHorizontal: 6,
+    paddingVertical: 1.6,
+    fontSize: 11,
+    borderRadius: 3,
+    color: '#ffffff',
+    marginRight: 10,
+  },
+
+  NewsListFeaturedStoryInfo: {
+    color: '#B3CAFF',
+    fontSize: 12,
+    fontFamily: 'Manrope3-Semibold',
+    letterSpacing: 0.25,
+  },
+
+  NewsListFeaturedPreloaderText: {
+    color: '#B3CAFF',
+    fontSize: 14,
+    fontFamily: 'Manrope3-Medium',
+    letterSpacing: 0.25,
+    marginTop: 32,
+  },
+
+  NewsListMoreStoriesPreloaderText: {
+    color: '#000033',
+    fontSize: 14,
+    fontFamily: 'Manrope3-Medium',
+    letterSpacing: 0.25,
+    marginTop: 32,
+  },
+
+  NewsListFeaturedStoryReactionContainer: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+
+  NewsListFeaturedStoryWebpageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#1DA1F2',
+    padding: 4,
+    maxWidth: 134,
+    borderRadius: 100,
+    borderWidth: 1,
+  },
+
+  NewsListFeaturedStoryReaction: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   /////
@@ -276,13 +365,13 @@ const styles = StyleSheet.create({
   },
 
   NewsDetailAppBarContainer: {
-    paddingTop: 48,
+    paddingTop: 56,
+    paddingBottom: 30,
     backgroundColor: '#3D3EC0',
     paddingHorizontal: 20,
   },
 
   NewsDetailFeaturedStoryContainer: {
-    paddingTop: 28,
     backgroundColor: '#3D3EC0',
     paddingHorizontal: 20,
     paddingBottom: 40,
@@ -294,7 +383,7 @@ const styles = StyleSheet.create({
   },
 
   NewsDetailFeaturedStoryTag: {
-    backgroundColor: '#1DA1F2',
+    backgroundColor: '#FEA62A',
     paddingHorizontal: 6,
     paddingVertical: 1.6,
     fontSize: 11,
@@ -349,7 +438,9 @@ const styles = StyleSheet.create({
   },
 
   NewsDetailCommentsContainer: {
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 100,
   },
 
   NewsDetailCommentSectionHeading: {
@@ -375,6 +466,22 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: 'Manrope3-Semibold',
     letterSpacing: 0.25,
+  },
+
+  NewsDetailMoreStoriesLoadingContainer: {
+    paddingHorizontal: 20,
+    // paddingBottom: 140,
+    marginVertical: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  NewsDetailMoreStoriesPreloaderText: {
+    color: '#000033',
+    fontSize: 14,
+    fontFamily: 'Manrope3-Medium',
+    letterSpacing: 0.25,
+    marginTop: 32,
   },
 
   //////
