@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import SplashScreen from 'react-native-splash-screen';
 
 // Screen Imports
 import AboutScreen from './src/screens/AboutScreen';
@@ -64,6 +65,10 @@ function MainAppTabNavigation() {
 }
 
 function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>

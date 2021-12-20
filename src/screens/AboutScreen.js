@@ -1,9 +1,22 @@
 import React from 'react';
-import {Text, View, Image, StatusBar} from 'react-native';
+import {Text, View, Image, StatusBar, Linking} from 'react-native';
 import {styles} from '../styles/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Toast from 'react-native-root-toast';
+import {toastOptions} from '../utils/helper';
 
 const AboutScreen = () => {
+  const openWebpage = url => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        Toast.show(`Device can't open: ${url}`, toastOptions);
+      }
+    });
+  };
+
   return (
     <View>
       <StatusBar
@@ -43,24 +56,41 @@ const AboutScreen = () => {
         {/* Social Media icons */}
         <View style={styles.AboutSocialContainer}>
           <View style={styles.AboutSocialWrapper}>
-            <Icon
-              name="twitter"
-              size={20}
-              color="#8c909c"
-              style={styles.AboutSocialIcons}
-            />
-            <Icon
-              name="stack-overflow"
-              size={20}
-              color="#8c909c"
-              style={styles.AboutSocialIcons}
-            />
-            <Icon
-              name="linkedin"
-              size={20}
-              color="#8c909c"
-              style={styles.AboutSocialIcons}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                openWebpage('https://twitter.com/michael_vons');
+              }}>
+              <Icon
+                name="twitter"
+                size={20}
+                color="#8c909c"
+                style={styles.AboutSocialIcons}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                openWebpage(
+                  'https://stackoverflow.com/users/2099437/michael-vons',
+                );
+              }}>
+              <Icon
+                name="stack-overflow"
+                size={20}
+                color="#8c909c"
+                style={styles.AboutSocialIcons}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                openWebpage('https://www.linkedin.com/in/michael-oshogbunu/');
+              }}>
+              <Icon
+                name="linkedin"
+                size={20}
+                color="#8c909c"
+                style={styles.AboutSocialIcons}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
