@@ -55,7 +55,6 @@ export const storyFetch = () => dispatch =>
     axios
       .get('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
       .then(res => {
-        console.log('res->', res);
         dispatch(storyFetchSuccess(res.data));
         resolve(res);
       })
@@ -73,7 +72,6 @@ export const storyLazy = (endpoints, stories) => dispatch =>
       .all(endpoints.map(endpoint => axios.get(endpoint)))
       .then(res => {
         let response = res.map((item, index) => item.data);
-        console.log(response);
         dispatch(storyLazySuccess(response, stories));
         resolve(response);
       })

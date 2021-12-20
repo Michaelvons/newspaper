@@ -33,7 +33,6 @@ export const commentLazy = endpoints => dispatch =>
       .all(endpoints.map(endpoint => axios.get(endpoint)))
       .then(res => {
         let response = res.map((item, index) => item.data);
-        console.log(response);
         dispatch(commentLazySuccess(response));
         resolve(response);
       })

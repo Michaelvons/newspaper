@@ -50,5 +50,5 @@ export const sanitizeComment = text => {
 };
 
 export const randomKey = () => {
-  return Math.floor(Math.random() * 10000);
+  return Math.floor(Math.random() * 10000000);
 };
